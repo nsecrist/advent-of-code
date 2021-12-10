@@ -15,6 +15,7 @@ func main() {
 	}
 
 	fmt.Println("Number of Measurements Larger than Previous: ", ScanMeasurements(lines))
+	fmt.Println("Number of Measurement Windows Larger than Previous: ", ScanMeasurementsWindow(lines))
 }
 
 func ScanMeasurements(lines []string) int64 {
@@ -30,6 +31,30 @@ func ScanMeasurements(lines []string) int64 {
 		}
 
 		prevInt = currentInt
+	}
+	return numLarger
+}
+
+func ScanMeasurementsWindow(lines []string) int64 {
+	var prevWindowSum int64
+	var numLarger int64
+	for i := range lines {
+		if i == len(lines)-2 {
+			break
+		}
+
+		c, _ := strconv.ParseInt(lines[i], 10, 32)
+		c1, _ := strconv.ParseInt(lines[i+1], 10, 32)
+		c2, _ := strconv.ParseInt(lines[i+2], 10, 32)
+		currentSum := c + c1 + c2
+
+		if i > 0 {
+			if currentSum > prevWindowSum {
+				numLarger++
+			}
+		}
+
+		prevWindowSum = currentSum
 	}
 	return numLarger
 }
