@@ -23,6 +23,7 @@ func main() {
 	fmt.Printf("Result (Horizontal Position * Depth): %d\n", result)
 }
 
+// Caluclates the Position and Depth using Aim
 func CalculatePositionAndDepthWithAim(commands []string) (int, int) {
 	aim := 0
 	hPos := 0
@@ -31,7 +32,7 @@ func CalculatePositionAndDepthWithAim(commands []string) (int, int) {
 	for _, command := range commands {
 		parts := strings.Fields(command)
 		direction := parts[0]
-		value := parseValue(parts[1])
+		value := ParseValue(parts[1])
 
 		switch direction {
 		case "forward":
@@ -47,7 +48,7 @@ func CalculatePositionAndDepthWithAim(commands []string) (int, int) {
 	return hPos, depth
 }
 
-func parseValue(s string) int {
+func ParseValue(s string) int {
 	var value int
 	fmt.Sscanf(s, "%d", &value)
 	return value

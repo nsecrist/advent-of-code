@@ -1,4 +1,4 @@
-module example/hello
+module advent-of-code/2021/hello
 
 go 1.17
 
