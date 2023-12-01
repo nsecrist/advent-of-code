@@ -9,7 +9,6 @@ import (
 	"sort"
 	"strconv"
 	"strings"
-	"unicode"
 )
 
 func GetDigitWords() []string {
@@ -65,26 +64,12 @@ func FindFirstOrLastDigit(s string, lastDigit bool, includeWords bool) (digit in
 	match := r.FindStringSubmatch(s)
 
 	if match[1] != "" { // First Group
-		if unicode.IsDigit(rune(match[1][0])) {
-			digit = int(match[1][0] - '0')
-			return
-		} else {
-			digit = ConvertToDigit(match[1], lastDigit)
-
-			if digit > -1 {
-				return
-			}
-		}
+		digit, _ = strconv.Atoi(string(match[3][0]))
+		return
 	} else if match[2] != "" { // Second Group
-		if unicode.IsDigit(rune(match[2][0])) {
-			digit = int(match[2][0] - '0')
+		digit = ConvertToDigit(match[2], lastDigit)
+		if digit > -1 {
 			return
-		} else {
-			digit = ConvertToDigit(match[2], lastDigit)
-
-			if digit > -1 {
-				return
-			}
 		}
 	}
 
