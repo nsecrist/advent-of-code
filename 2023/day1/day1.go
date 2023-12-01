@@ -53,6 +53,7 @@ func ReverseString(s string) string {
 	return string(runes)
 }
 
+// Allows you to get the first or last digit from a calibration line.
 func FindFirstOrLastDigit(s string, lastDigit bool, includeWords bool) (digit int) {
 
 	if lastDigit {
@@ -63,23 +64,23 @@ func FindFirstOrLastDigit(s string, lastDigit bool, includeWords bool) (digit in
 
 	match := r.FindStringSubmatch(s)
 
-	if match[1] != "" {
+	if match[1] != "" { // First Group
 		if unicode.IsDigit(rune(match[1][0])) {
 			digit = int(match[1][0] - '0')
 			return
 		} else {
-			digit = TryConvertToDigit(match[1], lastDigit)
+			digit = ConvertToDigit(match[1], lastDigit)
 
 			if digit > -1 {
 				return
 			}
 		}
-	} else if match[2] != "" {
+	} else if match[2] != "" { // Second Group
 		if unicode.IsDigit(rune(match[2][0])) {
 			digit = int(match[2][0] - '0')
 			return
 		} else {
-			digit = TryConvertToDigit(match[2], lastDigit)
+			digit = ConvertToDigit(match[2], lastDigit)
 
 			if digit > -1 {
 				return
@@ -87,11 +88,13 @@ func FindFirstOrLastDigit(s string, lastDigit bool, includeWords bool) (digit in
 		}
 	}
 
+	// Last group
 	digit, _ = strconv.Atoi(string(match[3][0]))
 	return
 }
 
-func TryConvertToDigit(s string, isReversed bool) (result int) {
+// Converts calibration value to digit
+func ConvertToDigit(s string, isReversed bool) (result int) {
 	resultMap := make(map[int]int)
 
 	if !isReversed {
@@ -103,7 +106,7 @@ func TryConvertToDigit(s string, isReversed bool) (result int) {
 	} else {
 		for _, word := range GetDigitWords() {
 			if strings.Contains(s, ReverseString(word)) {
-				resultMap[strings.Index(s, ReverseString(word))] = GetIntFromWord(ReverseString(word))
+				resultMap[strings.Index(s, ReverseString(word))] = GetIntFromWord(word)
 			}
 		}
 	}
@@ -122,27 +125,28 @@ func TryConvertToDigit(s string, isReversed bool) (result int) {
 	return resultMap[keys[0]]
 }
 
+// Switch statement to convert from lower-case digit words to integers
 func GetIntFromWord(w string) int {
 	switch w {
-	case "one", "eno":
+	case "one":
 		return 1
-	case "two", "owt":
+	case "two":
 		return 2
-	case "three", "eerht":
+	case "three":
 		return 3
-	case "four", "ruof":
+	case "four":
 		return 4
-	case "five", "evif":
+	case "five":
 		return 5
-	case "six", "xis":
+	case "six":
 		return 6
-	case "seven", "neves":
+	case "seven":
 		return 7
-	case "eight", "thgie":
+	case "eight":
 		return 8
-	case "nine", "enin":
+	case "nine":
 		return 9
-	case "zero", "orez":
+	case "zero":
 		return 0
 	default:
 		return -1
