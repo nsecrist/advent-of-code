@@ -64,7 +64,7 @@ func FindFirstOrLastDigit(s string, lastDigit bool, includeWords bool) (digit in
 	match := r.FindStringSubmatch(s)
 
 	if match[1] != "" { // First Group
-		digit, _ = strconv.Atoi(string(match[3][0]))
+		digit, _ = strconv.Atoi(string(match[1][0]))
 		return
 	} else if match[2] != "" { // Second Group
 		digit = ConvertToDigit(match[2], lastDigit)
