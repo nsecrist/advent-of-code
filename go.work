@@ -7,4 +7,5 @@ use (
 	"./2021/Hello World"
 	"./2023/Hello World"
 	./2023/day1
+	./2023/day2
 )
