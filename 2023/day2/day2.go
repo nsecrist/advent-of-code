@@ -18,6 +18,13 @@ func main() {
 	if err != nil {
 		log.Fatalf("ReadLines: %s", err)
 	}
+
+	Part1(input)
+	Part2(input)
+}
+
+func Part1(input []string) {
+
 	result := 0
 
 	redRegex := regexp.MustCompile(`(\d+)\s+red`)
@@ -34,7 +41,24 @@ func main() {
 		}
 	}
 
-	fmt.Println("Result: ", result)
+	fmt.Println("Part 1 Result: ", result)
+}
+
+func Part2(input []string) {
+
+	result := 0
+
+	redRegex := regexp.MustCompile(`(\d+)\s+red`)
+	greenRegex := regexp.MustCompile(`(\d+)\s+green`)
+	blueRegex := regexp.MustCompile(`(\d+)\s+blue`)
+
+	for _, line := range input {
+		result += GetMaxCube(redRegex.FindAllStringSubmatch(line, -1)) *
+			GetMaxCube(greenRegex.FindAllStringSubmatch(line, -1)) *
+			GetMaxCube(blueRegex.FindAllStringSubmatch(line, -1))
+	}
+
+	fmt.Println("Part 2 Result: ", result)
 }
 
 func IsGamePossible(input [][]string, max int) bool {
@@ -48,6 +72,20 @@ func IsGamePossible(input [][]string, max int) bool {
 	}
 
 	return true
+}
+
+func GetMaxCube(input [][]string) int {
+	maxCubes := 0
+	for _, match := range input {
+		for _, capture := range match {
+			gameCompare, _ := strconv.Atoi(capture)
+			if gameCompare > maxCubes {
+				maxCubes = gameCompare
+			}
+		}
+	}
+
+	return maxCubes
 }
 
 // Read Lines from file with input path
