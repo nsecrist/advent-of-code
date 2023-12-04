@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	input, err := os.ReadFile("wes.txt")
+	input, err := os.ReadFile("input.txt")
 	if err != nil {
 		fmt.Println("Error reading file:", err)
 		return
@@ -49,7 +49,7 @@ func Part1(input string) {
 						if i+x >= 0 && i+x < len(fixed) && j+y >= 0 && j+y < len(fixed[i+x]) {
 							adjacentChar := rune(fixed[i+x][j+y])
 							if isDigit(adjacentChar) {
-								number, _ := GetNumber(fixed[i], j)
+								number, _ := GetNumber(fixed[i+x], j+y)
 								result += number
 							}
 						}
@@ -74,6 +74,9 @@ func GetNumber(line string, index int) (int, error) {
 	runeLine := []rune(line)
 	for i := index; i < len(line) && isDigit(runeLine[i]); i-- {
 		numberString += string(line[i])
+		if i == 0 {
+			break
+		}
 	}
 
 	reversed := ReverseString(numberString)
@@ -89,7 +92,7 @@ func isSymbol(char rune) bool {
 	// Define symbols that indicate a part number
 	// symbols := "*+#$-%=/&"
 	// symbols := "!@#$%^&*()+-=~`_?><,[]{}/|;:"
-	symbols := "@#$_&-+/*="
+	symbols := "@#$_&-+/*=\r"
 	return strings.ContainsRune(symbols, char)
 }
 
