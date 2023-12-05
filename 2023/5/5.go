@@ -114,7 +114,7 @@ func (p *RangeMap) NextPos(c int64) int64 {
 	for i, src := range p.src {
 		l := p.l[i]
 		dest := p.dest[i]
-		if c >= src && c <= src+l {
+		if c >= src && c <= src+l-1 {
 			return dest + (c - src)
 		}
 	}
