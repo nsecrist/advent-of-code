@@ -6,6 +6,7 @@ use (
 	"./2021/Day 3"
 	"./2021/Hello World"
 	"./2023/Hello World"
+	./2023/5
 	./2023/day1
 	./2023/day2
 	./2023/day3
