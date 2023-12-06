@@ -1,36 +1,19 @@
-package main
+package day3
 
 import (
 	"bufio"
-	"fmt"
 	"os"
 	"strconv"
 	"strings"
 )
 
-func main() {
-	input, err := ReadLines("input.txt")
-	if err != nil {
-		fmt.Println("Error reading file:", err)
-		return
-	}
-	Part1(input)
-
-	input2, err := ReadLines("input.txt")
-	if err != nil {
-		fmt.Println("Error reading file:", err)
-		return
-	}
-	Part2(input2)
-}
-
-func Part1(input []string) {
-	var inputCopy = input
+func Part1(input *string) string {
+	data := strings.Split(*input, "\n")
 	result := 0
 	partNums := make([]int, 0)
-	for i := 0; i < len(inputCopy); i++ {
-		for j := 0; j < len(inputCopy[i]); j++ {
-			char := rune(inputCopy[i][j])
+	for i := 0; i < len(data); i++ {
+		for j := 0; j < len(data[i]); j++ {
+			char := rune(data[i][j])
 
 			// Skip periods
 			if char == '.' {
@@ -42,12 +25,12 @@ func Part1(input []string) {
 				// Check adjacent numbers (including diagonals)
 				for x := -1; x <= 1; x++ {
 					for y := -1; y <= 1; y++ {
-						if i+x >= 0 && i+x < len(inputCopy) && j+y >= 0 && j+y < len(inputCopy[i+x]) {
-							adjacentChar := rune(inputCopy[i+x][j+y])
+						if i+x >= 0 && i+x < len(data) && j+y >= 0 && j+y < len(data[i+x]) {
+							adjacentChar := rune(data[i+x][j+y])
 							if isDigit(adjacentChar) {
-								number, indexes, _ := GetNumber(inputCopy[i+x], j+y)
+								number, indexes, _ := GetNumber(data[i+x], j+y)
 								partNums = append(partNums, number)
-								inputCopy[i+x] = ClearIndexes(inputCopy[i+x], indexes)
+								data[i+x] = ClearIndexes(data[i+x], indexes)
 							}
 						}
 					}
@@ -56,15 +39,16 @@ func Part1(input []string) {
 		}
 	}
 	result = SumValuesInSlice(partNums)
-	fmt.Println("Part 1 Result: ", result)
+	return strconv.Itoa(result)
 }
 
-func Part2(input []string) {
+func Part2(input *string) string {
+	data := strings.Split(*input, "\n")
 	result := 0
 	partNums := make([]int, 0)
-	for i := 0; i < len(input); i++ {
-		for j := 0; j < len(input[i]); j++ {
-			char := rune(input[i][j])
+	for i := 0; i < len(data); i++ {
+		for j := 0; j < len(data[i]); j++ {
+			char := rune(data[i][j])
 
 			// Skip periods
 			if char == '.' {
@@ -77,12 +61,12 @@ func Part2(input []string) {
 				// Check adjacent numbers (including diagonals)
 				for x := -1; x <= 1; x++ {
 					for y := -1; y <= 1; y++ {
-						if i+x >= 0 && i+x < len(input) && j+y >= 0 && j+y < len(input[i+x]) {
-							adjacentChar := rune(input[i+x][j+y])
+						if i+x >= 0 && i+x < len(data) && j+y >= 0 && j+y < len(data[i+x]) {
+							adjacentChar := rune(data[i+x][j+y])
 							if isDigit(adjacentChar) {
-								number, indexes, _ := GetNumber(input[i+x], j+y)
+								number, indexes, _ := GetNumber(data[i+x], j+y)
 								gears = append(gears, number)
-								input[i+x] = ClearIndexes(input[i+x], indexes)
+								data[i+x] = ClearIndexes(data[i+x], indexes)
 							}
 						}
 					}
@@ -94,7 +78,7 @@ func Part2(input []string) {
 		}
 	}
 	result = SumValuesInSlice(partNums)
-	fmt.Println("Part 2 Result: ", result)
+	return strconv.Itoa(result)
 }
 
 func ClearIndexes(input string, indexes []int) string {

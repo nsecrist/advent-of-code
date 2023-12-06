@@ -1,4 +1,4 @@
-package main
+package day5
 
 import (
 	"fmt"
@@ -27,16 +27,8 @@ type RangeMap struct {
 	l    []int64
 }
 
-func main() {
-
-	input, _ := ReadFileInput("input.txt")
-
-	fmt.Println("Part 1:", Part1(input)) //3374647
-	fmt.Println("Part 2:", Part2(input))
-}
-
-func Part1(input string) string {
-	data := strings.Split(input, "\r\n\r\n")
+func Part1(input *string) string {
+	data := strings.Split(*input, "\n\n")
 	alamnac := &Almanac{}
 	alamnac.seeds = ParseSeeds(data[0])
 	alamnac.sts = ParseMap(data[1])
@@ -51,8 +43,8 @@ func Part1(input string) string {
 	return strconv.FormatInt(min, 10)
 }
 
-func Part2(input string) string {
-	data := strings.Split(input, "\r\n\r\n")
+func Part2(input *string) string {
+	data := strings.Split(*input, "\n\n")
 	alamnac := &Almanac{}
 	alamnac.seeds = ParseSeeds(data[0])
 	alamnac.sts = ParseMap(data[1])
@@ -79,7 +71,7 @@ func ParseSeeds(seeds string) []int64 {
 }
 
 func ParseMap(m string) RangeMap {
-	lines := strings.Split(m, "\r\n")
+	lines := strings.Split(m, "\n")
 	pm := &RangeMap{}
 	for i := 1; i < len(lines); i++ {
 		vals := strings.Split(lines[i], " ")

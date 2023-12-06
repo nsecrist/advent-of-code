@@ -1,9 +1,7 @@
-package main
+package day1
 
 import (
 	"bufio"
-	"fmt"
-	"log"
 	"os"
 	"regexp"
 	"sort"
@@ -26,20 +24,28 @@ func GetDigitWords() []string {
 	}
 }
 
-func main() {
-	input, err := ReadLines("input.txt")
-	if err != nil {
-		log.Fatalf("ReadLines: %s", err)
+func Part1(input *string) string {
+	data := strings.Split(*input, "\n")
+	calibrationValue := 0
+	for _, line := range data {
+		fd := FindFirstOrLastDigit(line, false, false)
+		ld := FindFirstOrLastDigit(line, true, false)
+		calibrationValue += fd*10 + ld
 	}
 
+	return strconv.Itoa(calibrationValue)
+}
+
+func Part2(input *string) string {
+	data := strings.Split(*input, "\n")
 	calibrationValue := 0
-	for _, line := range input {
+	for _, line := range data {
 		fd := FindFirstOrLastDigit(line, false, true)
 		ld := FindFirstOrLastDigit(line, true, true)
 		calibrationValue += fd*10 + ld
 	}
 
-	fmt.Println("Calibration Value: ", calibrationValue)
+	return strconv.Itoa(calibrationValue)
 }
 
 // Reverses a string

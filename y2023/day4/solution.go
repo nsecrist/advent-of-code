@@ -1,46 +1,37 @@
-package main
+package day4
 
 import (
 	"bufio"
-	"fmt"
 	"math"
 	"os"
 	"regexp"
 	"strconv"
+	"strings"
 )
 
-func main() {
-	scratchcards, err := ReadLines("input.txt")
-	if err != nil {
-		fmt.Println("Error reading file:", err)
-		return
-	}
-
-	Part1(scratchcards)
-	Part2(scratchcards)
-}
-
-func Part1(input []string) {
+func Part1(input *string) string {
+	data := strings.Split(*input, "\n")
 	result := 0
 
-	for _, card := range input {
+	for _, card := range data {
 		score, _ := GetCardPointValue(card)
 		result += score
 	}
 
-	fmt.Println("Part 1 Result: ", result)
+	return strconv.Itoa(result)
 }
 
-func Part2(input []string) {
+func Part2(input *string) string {
+	data := strings.Split(*input, "\n")
 	result := 0
 
-	cardCount := make([]int, len(input))
+	cardCount := make([]int, len(data))
 
 	for i := range cardCount {
 		cardCount[i] = 1
 	}
 
-	for i, card := range input {
+	for i, card := range data {
 		_, matches := GetCardPointValue(card)
 
 		cardCount = AddCardCopies(i, cardCount[i], matches, cardCount)
@@ -50,7 +41,7 @@ func Part2(input []string) {
 		result += val
 	}
 
-	fmt.Println("Part 2 Result: ", result)
+	return strconv.Itoa(result)
 }
 
 func AddCardCopies(cI int, numCards int, matches int, cards []int) []int {

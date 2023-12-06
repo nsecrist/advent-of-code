@@ -1,30 +1,19 @@
-package main
+package day2
 
 import (
 	"bufio"
-	"fmt"
-	"log"
 	"os"
 	"regexp"
 	"strconv"
+	"strings"
 )
 
 const MaxRed = 12
 const MaxGreen = 13
 const MaxBlue = 14
 
-func main() {
-	input, err := ReadLines("input.txt")
-	if err != nil {
-		log.Fatalf("ReadLines: %s", err)
-	}
-
-	Part1(input)
-	Part2(input)
-}
-
-func Part1(input []string) {
-
+func Part1(input *string) string {
+	data := strings.Split(*input, "\n")
 	result := 0
 
 	redRegex := regexp.MustCompile(`(\d+)\s+red`)
@@ -32,7 +21,7 @@ func Part1(input []string) {
 	blueRegex := regexp.MustCompile(`(\d+)\s+blue`)
 	gameRegex := regexp.MustCompile(`(\d+):`)
 
-	for _, line := range input {
+	for _, line := range data {
 		if (IsGamePossible(redRegex.FindAllStringSubmatch(line, -1), MaxRed)) &&
 			IsGamePossible(greenRegex.FindAllStringSubmatch(line, -1), MaxGreen) &&
 			IsGamePossible(blueRegex.FindAllStringSubmatch(line, -1), MaxBlue) {
@@ -41,24 +30,24 @@ func Part1(input []string) {
 		}
 	}
 
-	fmt.Println("Part 1 Result: ", result)
+	return strconv.Itoa(result)
 }
 
-func Part2(input []string) {
-
+func Part2(input *string) string {
+	data := strings.Split(*input, "\n")
 	result := 0
 
 	redRegex := regexp.MustCompile(`(\d+)\s+red`)
 	greenRegex := regexp.MustCompile(`(\d+)\s+green`)
 	blueRegex := regexp.MustCompile(`(\d+)\s+blue`)
 
-	for _, line := range input {
+	for _, line := range data {
 		result += GetMaxCube(redRegex.FindAllStringSubmatch(line, -1)) *
 			GetMaxCube(greenRegex.FindAllStringSubmatch(line, -1)) *
 			GetMaxCube(blueRegex.FindAllStringSubmatch(line, -1))
 	}
 
-	fmt.Println("Part 2 Result: ", result)
+	return strconv.Itoa(result)
 }
 
 func IsGamePossible(input [][]string, max int) bool {
