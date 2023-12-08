@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"strings"
 )
 
 // Read entire file from inout path
@@ -36,8 +35,4 @@ func ReadLines(path string) ([]string, error) {
 	}
 
 	return lines, scanner.Err()
-}
-
-func StringToLinesSlice(input *string, delimeter string) (lines []string) {
-	return strings.Split(*input, delimeter)
 }
