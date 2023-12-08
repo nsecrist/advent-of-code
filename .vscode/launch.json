@@ -11,6 +11,22 @@
             "mode": "debug",
             "program": "${workspaceFolder}",
             "args": ["2023", "6", "1"]
+        },
+        {
+            "name": "2023-7-1",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}",
+            "args": ["2023", "7", "1"]
+        },
+        {
+            "name": "2023-7-2",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}",
+            "args": ["2023", "7", "2"]
         }
 
     ]
