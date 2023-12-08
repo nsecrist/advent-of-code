@@ -13,35 +13,35 @@ type Desert struct {
 }
 
 func Part1(input *string) string {
-	instructions, desertMap := parseFile(*input)
+	instructions, desertMap := ParseFileInput(*input)
 
 	desertMapInstructions := &Desert{
 		pMap:       desertMap,
 		directions: instructions,
 	}
 
-	return strconv.Itoa(desertMapInstructions.processMap(false))
+	return strconv.Itoa(desertMapInstructions.ProcessMap(false))
 }
 
 func Part2(input *string) string {
-	instructions, desertMap := parseFile(*input)
+	instructions, desertMap := ParseFileInput(*input)
 
 	desertMapInstructions := &Desert{
 		pMap:       desertMap,
 		directions: instructions,
 	}
 
-	return strconv.Itoa(desertMapInstructions.processMap(true))
+	return strconv.Itoa(desertMapInstructions.ProcessMap(true))
 }
 
-func (desertMap *Desert) processMap(lastCA bool) int {
+func (desertMap *Desert) ProcessMap(lastCA bool) int {
 
 	directionIndex := 0
 
-	totalKeys := maps.Keys(desertMap.pMap)
+	allKeys := maps.Keys(desertMap.pMap)
 	startingKeys := make([]string, 0)
 
-	for _, key := range totalKeys {
+	for _, key := range allKeys {
 		if lastCA {
 			if string(key[2]) == "A" {
 				startingKeys = append(startingKeys, key)
@@ -79,10 +79,10 @@ func (desertMap *Desert) processMap(lastCA bool) int {
 		numIterationsPerKey[index] = numIterations
 	}
 
-	return getLeastCommonMultiple(numIterationsPerKey)
+	return GetLeastCommonMultiple(numIterationsPerKey)
 }
 
-func getLeastCommonMultiple(numbers []int) int {
+func GetLeastCommonMultiple(numbers []int) int {
 	lcm := numbers[0]
 	for i := 0; i < len(numbers); i++ {
 		num1 := lcm
@@ -100,7 +100,7 @@ func getLeastCommonMultiple(numbers []int) int {
 	return lcm
 }
 
-func parseFile(fileContents string) ([]string, map[string][]string) {
+func ParseFileInput(fileContents string) ([]string, map[string][]string) {
 	fileInfo := strings.Split(fileContents, "\n\n")
 	instructionsStrings := strings.Split(fileInfo[0], "")
 
